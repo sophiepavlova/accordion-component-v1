@@ -32,7 +32,7 @@ function Accordion({ data }) {
           num={i + 1}
           title={item.title}
           text={item.text}
-          key={i + 1}
+          key={item.title}
         />
       ))}
     </div>
@@ -42,16 +42,16 @@ function Accordion({ data }) {
 function AccordionItem({ num, title, text }) {
   const [isOpen, setIsOpen] = useState(false);
   function handleToggleItem() {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
+    // isOpen ? setIsOpen(false) : setIsOpen(true);
+    setIsOpen((current) => !current);
   }
   return (
-    <div className={isOpen ? `item ` : `item open`}>
+    <div className={`item ${isOpen ? 'open' : ''}`} onClick={handleToggleItem}>
+      {/* <div className={isOpen ? `item open` : `item`} onClick={handleToggleItem}> */}
       <p className='number'>{num < 10 ? `0${num}` : num}</p>
-      <p className='text'>{title}</p>
-      <p className='icon' onClick={handleToggleItem}>
-        {isOpen ? `+` : '-'}
-      </p>
-      <div className='content-box'>{!isOpen ? text : ''}</div>
+      <p className='title'>{title}</p>
+      <p className='icon'>{isOpen ? `-` : '+'}</p>
+      {isOpen && <div className='content-box'>{text}</div>}
     </div>
   );
 }
